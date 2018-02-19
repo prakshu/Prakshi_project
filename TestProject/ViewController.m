@@ -21,36 +21,41 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if ([[UIDevice currentDevice] userInterfaceIdiom] ==
-        UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 621)
+        UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1104)
     {
 //        [scrlview setContentSize:CGSizeMake(320, 800)];
         self.tableView.frame=CGRectMake(0, 0, 1242, 2208);
     }
     else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
-             UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 320)
+             UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568)
     {
         //        [scrlview setContentSize:CGSizeMake(320, 800)];
-        self.tableView.frame=CGRectMake(0, 0, 640, 1136);
+        self.tableView.frame=CGRectMake(0, 0, 600, 1136);
     }
     else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
-        UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 375)
+        UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 667)
     {
         //        [scrlview setContentSize:CGSizeMake(320, 800)];
         self.tableView.frame=CGRectMake(0, 0, 750, 1334);
     }
    else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
-        UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1024)
+        UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1366)
     {
         //        [scrlview setContentSize:CGSizeMake(320, 800)];
         self.tableView.frame=CGRectMake(0, 0, 2048, 2732);
     }
    else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
-            UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 621)
+            UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 1104)
    {
 //
 //        scrlview.frame = CGRectMake(0, 20, 320, 423);
 //        [scrlview setContentSize:CGSizeMake(320, 800)];
         
+    }
+    else
+    {
+        self.tableView.frame=CGRectMake(0, 0, 320, 1136);
+
     }
 
     refreshControl = [[UIRefreshControl alloc]init];

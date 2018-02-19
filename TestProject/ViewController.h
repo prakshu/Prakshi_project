@@ -7,9 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Location.h"
+#import "TableViewCell.h"
+@interface ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,NSURLConnectionDelegate,NSURLSessionDelegate,NSURLConnectionDataDelegate>
+{
+    UIRefreshControl *refreshControl;
+    Location *location;
+    TableViewCell *cell;
+    NSArray *_locations;
 
-@interface ViewController : UIViewController
-
+}
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
 
 @end
 

@@ -1,24 +1,24 @@
 //
-//  TestProjectTests.m
-//  TestProjectTests
+//  NewTest.m
+//  NewTest
 //
-//  Created by Prakshi Bector on 18/2/18.
+//  Created by Prakshi Bector on 25/2/18.
 //  Copyright © 2018 Prakshi Bector. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 #import "ViewController.h"
 
-@interface TestProjectTests : XCTestCase
+@interface NewTest : XCTestCase
 @property (nonatomic) ViewController *vcTest;
 @end
 
-@implementation TestProjectTests
+@implementation NewTest
 
 - (void)setUp {
+    [super setUp];
     
     self.vcTest=[[ViewController alloc]init];
-    [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
@@ -28,6 +28,7 @@
 }
 
 - (void)testExample {
+    
     [_vcTest callJsonData];
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.

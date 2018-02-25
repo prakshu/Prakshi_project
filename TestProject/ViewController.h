@@ -8,16 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "Location.h"
-#import "TableViewCell.h"
 @interface ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,NSURLConnectionDelegate,NSURLSessionDelegate,NSURLConnectionDataDelegate>
 {
     UIRefreshControl *refreshControl;
     Location *location;
-    TableViewCell *cell;
     NSArray *_locations;
 
 }
+-(void)callJsonData;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UILabel *descLabl;
+@property (nonatomic, strong) IBOutlet UILabel *titleLbl;
+@property (nonatomic, weak) IBOutlet UIImageView *thumbnailImageView;
 
 @end
 

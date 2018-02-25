@@ -9,8 +9,8 @@
 #import "ViewController.h"
 #import "Location.h"
 #import "JSONLoader.h"
-#import "UIImageView+WebCache.h"
-#import "TableViewCell.h"
+//#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface ViewController ()
 
@@ -20,42 +20,55 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] ==
-        UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1104)
-    {
-        self.tableView.frame=CGRectMake(0, 0, 1242, 2208);
-    }
-    else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
-             UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568)
-    {
-        self.tableView.frame=CGRectMake(0, 0, 600, 1136);
-    }
-    else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
-        UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 667)
-    {
-        self.tableView.frame=CGRectMake(0, 0, 750, 1334);
-    }
-   else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
-        UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1366)
-    {
-        self.tableView.frame=CGRectMake(0, 0, 2048, 2732);
-    }
-   else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
-            UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 1104)
-   {
-//
-       self.tableView.frame=CGRectMake(0, 0, 1242, 2208);
-
-    }
-    else
-    {
-        self.tableView.frame=CGRectMake(0, 0, 320, 1136);
-
-    }
-
     refreshControl = [[UIRefreshControl alloc]init];
     [self.tableView addSubview:refreshControl];
     [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] ==
+        UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 736)//6 plus and 6s plus
+    {
+        self.tableView.frame=CGRectMake(0, 0, 414, 736);
+
+    }
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
+             UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568)//5s
+    {
+        self.tableView.frame=CGRectMake(0, 0, 320, 568);
+    }
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
+        UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 1104)//7 plus
+    {
+        self.tableView.frame=CGRectMake(0, 0, 621, 1104);
+    }
+    else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
+        UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 667)//iph 6
+    {
+        self.tableView.frame=CGRectMake(0, 0, 375, 667);
+    }
+   else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
+        UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1366)//ipad 12.9
+    {
+        self.tableView.frame=CGRectMake(0, 0, 1024, 1366);
+    }
+   
+   else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
+            UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1024)//ipad 9.
+   {
+       self.tableView.frame=CGRectMake(0, 0, 768, 1024);
+   }
+   else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
+            UIUserInterfaceIdiomPad && [UIScreen mainScreen].bounds.size.height == 1112)//ipad 10.5
+   {
+       self.tableView.frame=CGRectMake(0, 0, 834, 1112);
+   }
+   
+   else if ([[UIDevice currentDevice] userInterfaceIdiom] ==
+            UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 812)//iph x
+    {
+        self.tableView.frame=CGRectMake(0, 0, 375, 812);
+
+    }
+
+   
     
     //navigation title through json
     NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Displaydata" ofType:@"json"]];
@@ -97,61 +110,68 @@
 #pragma mark - Table View Controller Methods
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *simpleTableIdentifier = @"testCell";
+
     
-    TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TableViewCell"];
-    if (cell == nil)
-    {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TableViewCell" owner:self options:nil];
-        cell = [nib objectAtIndex:0];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+
     }
     Location *location = [_locations objectAtIndex:indexPath.row];
+
+    UIImageView *ImageView = (UIImageView *)[cell viewWithTag:100];
+
+    UILabel *titleLabel = (UILabel *)[cell viewWithTag:101];
+    
+    UILabel *descLabel = (UILabel *)[cell viewWithTag:102];
+    
+    
     id displayNameTypeValue = location.Descriptrion;
     id nameType = location.Title;
     id imgType = location.url;
     
     if ( displayNameTypeValue == [NSNull null])
     {
-        cell.descLabel.text = @"";
+        descLabel.text = @"";
         
     }
     else
     {
-        int myLength = [location.Descriptrion length];
-        cell.descLabel.text = location.Descriptrion;
+        NSInteger myLength = [location.Descriptrion length];
+      descLabel.text = location.Descriptrion;
         if(location.Descriptrion.length>172)
         {
-            cell.descLabel.text = location.Descriptrion;
-            self.tableView.rowHeight=150;
-            cell.descLabel.frame=CGRectMake(81, 15, 290, 150);
+           descLabel.text = location.Descriptrion;
+            self.tableView.rowHeight=200;
         }
         else{
-            self.tableView.rowHeight=90;
-            cell.descLabel.frame=CGRectMake(81, 18, 290, 70);
+            self.tableView.rowHeight=116;
 
         }
         
-        NSLog( @"lenghth is %d",myLength );
+//        NSLog( @"lenghth is %d",myLength );
     }
     if ( nameType == [NSNull null])
     {
-        cell.nameLabel.text = @"";
+      titleLabel.text = @"";
         
     }
     else
     {
-        cell.nameLabel.text = location.Title;
+        titleLabel.text = location.Title;
         
     }
     if ( imgType == [NSNull null])
     {
-        cell.thumbnailImageView.image = [UIImage imageNamed:@""];
+      ImageView.image = [UIImage imageNamed:@""];
         
     }
     else
     {
         
-        
-        [cell.thumbnailImageView sd_setImageWithURL:[NSURL URLWithString:location.url] placeholderImage:[UIImage imageNamed:@"noImage.jpg"] options:SDWebImageRefreshCached|SDWebImageProgressiveDownload];
+      [ImageView sd_setImageWithURL:[NSURL URLWithString:location.url] placeholderImage:[UIImage imageNamed:@"noImage.jpg"] options:SDWebImageRefreshCached|SDWebImageProgressiveDownload];
         
     }
     
@@ -159,8 +179,7 @@
 }
 //- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 //{
-//    Location *location = [_locations objectAtIndex:indexPath.row];
-//
+
 //    return 90;
 //}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

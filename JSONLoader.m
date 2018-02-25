@@ -10,7 +10,7 @@
 #import "Location.h"
 
 @implementation JSONLoader
-
+@synthesize nst;
 - (NSArray *)locationsFromJSONFile:(NSURL *)url {
     // Create a NSURLRequest with the given URL
     NSURLRequest *request = [NSURLRequest requestWithURL:url
@@ -29,6 +29,8 @@
     
     // Get an array of dictionaries with the key "locations"
     NSArray *array = [jsonDictionary objectForKey:@"rows"];
+ nst = [jsonDictionary objectForKey:@"title"];
+
     // Iterate through the array of dictionaries
     for(NSDictionary *dict in array) {
         // Create a new Location object for each one and initialise it with information in the dictionary

@@ -12,5 +12,5 @@
 
 // Return an array of Location objects from the json file at location given by url
 - (NSArray *)locationsFromJSONFile:(NSURL *)url;
-
+@property (strong) NSString *nst;
 @end
